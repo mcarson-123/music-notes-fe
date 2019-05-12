@@ -1,0 +1,3 @@
+rootProject.name = 'musicNotesFE'
+
+include ':app'
