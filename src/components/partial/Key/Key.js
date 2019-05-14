@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { View, TouchableOpacity, TouchableHighlight } from 'react-native';
-
-import includes from 'lodash/includes';
+import { TouchableOpacity } from 'react-native';
 
 class Key extends React.PureComponent {
 
   onButtonPress = () => {
-    const correct =  includes(this.props.noteValue, this.props.note)
-    console.log(correct);
+    this.props.onNotePress(this.props.noteValue);
   }
 
   render() {

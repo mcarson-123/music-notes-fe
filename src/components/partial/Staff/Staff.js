@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { View } from 'react-native';
-import sample from 'lodash/sample';
-import get from 'lodash/get';
 
 import styles from './Staff.styles';
 
