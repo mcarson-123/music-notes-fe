@@ -18,7 +18,7 @@ note to self: Come up with a snappy name for this
   - [ ] Store notes the user took a "long" (figure out what long means) time to select
   - [ ] Store notes the user got incorrect
 - [ ] Show the user the notes they need to see "more often" (What does this mean? Still want to show some other random notes, but weigh the flagged notes more heavily)
-- [ ] Don't show the user the same note they just got (can be local state, doesn't need to persist on app closing)
+- [x] Don't show the user the same note they just got (can be local state, doesn't need to persist on app closing)
 - [x] Show a new note to the user once they have guessed the current note and have been provided feedback
 - [ ] Show some sort of nice feedback to the user that they got it correct?
 - [ ] Add the bass cleff

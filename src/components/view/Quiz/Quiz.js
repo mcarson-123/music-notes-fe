@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import sample from 'lodash/sample';
 import get from 'lodash/get';
 import forEach from 'lodash/forEach';
+import without from 'lodash/without';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
@@ -62,7 +63,13 @@ class Quiz extends React.Component {
   }
 
   nextNote = () => {
-    const note = sample(notes)
+    // Don't show the user a note they have just seen
+    // within this current session, if the app had been shut
+    // down it's doesn't matter if they see the same note right
+    // away upon opening it up
+    const prevNote = this.state.note;
+
+    const note = sample(without(notes, prevNote))
     const offset = get(notesWithOffset, note);
 
     return { note, offset }
