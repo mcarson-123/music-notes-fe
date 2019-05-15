@@ -19,7 +19,8 @@ note to self: Come up with a snappy name for this
   - [ ] Store notes the user got incorrect
 - [ ] Show the user the notes they need to see "more often" (What does this mean? Still want to show some other random notes, but weigh the flagged notes more heavily)
 - [ ] Don't show the user the same note they just got (can be local state, doesn't need to persist on app closing)
-- [ ] Show a new note to the user once they have guessed the current note and have been provided feedback
+- [x] Show a new note to the user once they have guessed the current note and have been provided feedback
+- [ ] Show some sort of nice feedback to the user that they got it correct?
 - [ ] Add the bass cleff
 - [ ] Add the notes above and below the main staff lines (the ledger line notes)
 - [ ] Add the treble cleff and base cleff images to the staff
