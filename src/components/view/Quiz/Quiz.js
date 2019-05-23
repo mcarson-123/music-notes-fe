@@ -7,6 +7,7 @@ import sample from 'lodash/sample';
 import get from 'lodash/get';
 import forEach from 'lodash/forEach';
 import without from 'lodash/without';
+import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
@@ -24,23 +25,27 @@ const notesWithOffset = {
 
 class Quiz extends React.Component {
 
-  state = { loading: true }
+  state = { loading: true, correctRunCount: 0}
 
   componentDidMount() {
-    this.getStoreValues(["incorrectCount", "correctCount"]).then((values) => {
+    const intValues = ["correctCount", "incorrectCount"];
+    const jsonValues = ["incorrectList"];
+    this.getStoreValues(intValues.concat(jsonValues))
+      .then((values) => {
+        const valuesHash = { loading: false }
 
-      const newNote = this.nextNote()
-      const valuesHash = {
-        loading: false,
-        ...newNote,
-      }
+        forEach(values, (value) => {
+          if (intValues.indexOf(value[0]) >= 0) {
+            valuesHash[value[0]] = parseInt(value[1], 10) || 0
+          } else if (jsonValues.indexOf(value[0]) >= 0) {
+            valuesHash[value[0]] = JSON.parse(value[1]) || []
+          }
+        });
 
-      forEach(values, (value) => {
-        valuesHash[value[0]] = parseInt(value[1], 10) || 0
+        const newNote = this.nextNote(valuesHash["incorrectList"])
+
+        this.setState({ ...valuesHash, ...newNote });
       });
-
-      this.setState(valuesHash);
-    });
   }
 
   getStoreValues = async (keys) => {
@@ -62,14 +67,23 @@ class Quiz extends React.Component {
     }
   }
 
-  nextNote = () => {
+    nextNote = (incorrectList) => {
+    let notesToChooseFrom = notes
+
+    // NOTE: May want to weigh incorrect notes even more heavily.
+    // Given this method the user may not notice they are being given
+    // their previously wrong notes more often.
+    const incorrect = incorrectList || this.state.incorrectList || []
+    notesToChooseFrom = notesToChooseFrom.concat(incorrect)
+
     // Don't show the user a note they have just seen
     // within this current session, if the app had been shut
     // down it's doesn't matter if they see the same note right
     // away upon opening it up
     const prevNote = this.state.note;
+    notesToChooseFrom = without(notesToChooseFrom, prevNote)
 
-    const note = sample(without(notes, prevNote))
+    const note = sample(notesToChooseFrom)
     const offset = get(notesWithOffset, note);
 
     return { note, offset }
@@ -80,18 +94,42 @@ class Quiz extends React.Component {
     this.setState({incorrectCount: 0, correctCount: 0});
   }
 
+  updateIncorrectList = () => {
+    const currentList = this.state.incorrectList || []
+    // Want to keep the list to the 20 most recent incorrect notes.
+    // Duplicates are okay, since this helps weigh duplicate incorrect
+    // answers more heavily.
+
+    // add note to end of list
+    currentList.push(this.state.note)
+
+    // pare list down to 20 max
+    const paredDownList = takeRight(currentList, 20)
+    return paredDownList
+  }
+
   onNotePress = (key) => {
     const correct =  key.indexOf(this.state.note) >= 0;
+
     if (correct) {
       const newNote = this.nextNote()
       this.setState({
         correctCount: this.state.correctCount + 1,
+        correctRunCount: this.state.correctRunCount + 1,
         ...newNote,
       });
       this.setStoreValues([["correctCount", this.state.correctCount + 1]])
     } else {
-      this.setState({incorrectCount: this.state.incorrectCount + 1});
-      this.setStoreValues([["incorrectCount", this.state.incorrectCount + 1]])
+      const incorrectList = this.updateIncorrectList();
+      const incorrectCount = this.state.incorrectCount + 1;
+      this.setState(
+        {
+          incorrectCount: incorrectCount,
+          correctRunCount: 0, // Reset correct run, sad for them :(
+          incorrectList
+        }
+      );
+      this.setStoreValues([["incorrectCount", incorrectCount], ["incorrectList", JSON.stringify(incorrectList)]])
     }
   }
 
@@ -111,6 +149,7 @@ class Quiz extends React.Component {
         <View>
           <Text>{`Correct: ${this.state.correctCount}`}</Text>
           <Text>{`Incorrect: ${this.state.incorrectCount}`}</Text>
+          <Text>{`${this.state.correctRunCount} correct in a row!`}</Text>
           <TouchableOpacity onPress={this.resetCounts}><Text>Reset</Text></TouchableOpacity>
         </View>
         <Staff note={this.state.note} offset={this.state.offset}/>
