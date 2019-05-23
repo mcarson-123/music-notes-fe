@@ -15,7 +15,7 @@ note to self: Come up with a snappy name for this
 ## TODO
 - [ ] Add application state to store the user's current progress
   - [x] Store the current run (number of correct and incorrect notes in current session)
-  - [ ] Store notes the user took a "long" (figure out what long means) time to select
+  - [x] Store notes the user took a "long" (figure out what long means) time to select
   - [x] Store notes the user got incorrect
 - [x] Show the user the notes they need to see "more often" (What does this mean? Still want to show some other random notes, but weigh the flagged notes more heavily)
 - [x] Don't show the user the same note they just got (can be local state, doesn't need to persist on app closing)

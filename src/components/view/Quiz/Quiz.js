@@ -74,6 +74,7 @@ class Quiz extends React.Component {
     // Given this method the user may not notice they are being given
     // their previously wrong notes more often.
     const incorrect = incorrectList || this.state.incorrectList || []
+    // console.log("INCORRECT LIST", incorrect)
     notesToChooseFrom = notesToChooseFrom.concat(incorrect)
 
     // Don't show the user a note they have just seen
@@ -85,8 +86,9 @@ class Quiz extends React.Component {
 
     const note = sample(notesToChooseFrom)
     const offset = get(notesWithOffset, note);
+    const startTime = Date.now()
 
-    return { note, offset }
+    return { note, offset, startTime }
   }
 
   resetCounts = () => {
@@ -112,10 +114,23 @@ class Quiz extends React.Component {
     const correct =  key.indexOf(this.state.note) >= 0;
 
     if (correct) {
+      // Only need to check the time if it was correct, since if it was
+      // incorrect the note will be captured regardless
+      const endTime = Date.now()
+      const timeDeltaMs = endTime - this.state.startTime
+      // Add note to incorrect list if it took the user longer than 3 seconds
+      // to select it
+      let incorrectList;
+      if (timeDeltaMs >= 3000) {
+        incorrectList = this.updateIncorrectList();
+      }
+
       const newNote = this.nextNote()
+
       this.setState({
         correctCount: this.state.correctCount + 1,
         correctRunCount: this.state.correctRunCount + 1,
+        incorrectList,
         ...newNote,
       });
       this.setStoreValues([["correctCount", this.state.correctCount + 1]])
