@@ -7,8 +7,12 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'black',
+    borderRightWidth: 0,
   },
   leftMarginStyle: {
     marginLeft: -10,
+  },
+  lastChild: {
+    borderRightWidth: 1,
   }
 })

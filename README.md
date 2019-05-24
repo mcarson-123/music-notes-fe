@@ -13,7 +13,7 @@ note to self: Come up with a snappy name for this
 -> As of May 12th, 2019: This app is incomplete, more spare time needed (the limiting factor in my life)
 
 ## TODO
-- [ ] Add application state to store the user's current progress
+- [x] Add application state to store the user's current progress
   - [x] Store the current run (number of correct and incorrect notes in current session)
   - [x] Store notes the user took a "long" (figure out what long means) time to select
   - [x] Store notes the user got incorrect
@@ -25,6 +25,7 @@ note to self: Come up with a snappy name for this
 - [ ] Add the notes above and below the main staff lines (the ledger line notes)
 - [ ] Add the treble cleff and base cleff images to the staff
 - [ ] Add sharps and flats into the quiz
+- [x] Remove double border on the adjacent white keys
 - [ ] Size the piano key octave and the staff appropriately to the current screen dimensions
 - [ ] Allow the user to just use buttons with the key names on them instead of the piano keys (the user may not be learning the piano, but a different instrument)
 - [ ] Style note itself to either be a whole note (with no stem) or a quarter note (add a stem), currently is not really a real note
