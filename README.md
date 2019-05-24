@@ -26,9 +26,10 @@ note to self: Come up with a snappy name for this
 - [ ] Add the treble cleff and base cleff images to the staff
 - [ ] Add sharps and flats into the quiz
 - [x] Remove double border on the adjacent white keys
-- [ ] Size the piano key octave and the staff appropriately to the current screen dimensions
+- [x] Size the piano key octave and the staff appropriately to the current screen dimensions
 - [ ] Allow the user to just use buttons with the key names on them instead of the piano keys (the user may not be learning the piano, but a different instrument)
 - [ ] Style note itself to either be a whole note (with no stem) or a quarter note (add a stem), currently is not really a real note
+- [ ] Deal with landscape mode?
 - [ ] Add linter, duh
 - [ ] Add nice styling
 - [ ] Do any required refactoring to make sure the various methods are happening in the components that should contain the responsibility (important as when I'm making an app for fun not work, I can get carried away hacking it together, also my time spent is disparate, here and there)

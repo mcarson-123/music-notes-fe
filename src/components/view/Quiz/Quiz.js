@@ -12,6 +12,8 @@ import takeRight from 'lodash/takeRight';
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
 
+import styles from './Quiz.styles';
+
 const notes = ["F", "G", "A", "B", "C", "D", "E"];
 const notesWithOffset = {
   "F": 3,
@@ -149,10 +151,6 @@ class Quiz extends React.Component {
   }
 
   render() {
-    // var {height, width} = Dimensions.get('window');
-    // console.log("height", height);
-    // console.log("width", width);
-
     if (this.state.loading) {
       return(
         <Text>Loading everything...</Text>
@@ -160,19 +158,28 @@ class Quiz extends React.Component {
     }
 
     return(
-      <View>
+      <View style={styles.wrapper}>
         <View>
           <Text>{`Correct: ${this.state.correctCount}`}</Text>
           <Text>{`Incorrect: ${this.state.incorrectCount}`}</Text>
           <Text>{`${this.state.correctRunCount} correct in a row!`}</Text>
           <TouchableOpacity onPress={this.resetCounts}><Text>Reset</Text></TouchableOpacity>
         </View>
-        <Staff note={this.state.note} offset={this.state.offset}/>
-        <Octave note={this.state.note} onNotePress={this.onNotePress}/>
+        <View style={styles.view}>
+          <Staff
+            note={this.state.note}
+            offset={this.state.offset}
+          />
+          <View style={{height: 40}}/>
+          <Octave
+            note={this.state.note}
+            onNotePress={this.onNotePress}
+          />
+        </View>
       </View>
     );
   }
 
 }
-
+// <View style={[styles.view, {width}]}>
 export default Quiz;

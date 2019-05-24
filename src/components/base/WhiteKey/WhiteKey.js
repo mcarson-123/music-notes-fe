@@ -6,19 +6,20 @@ import styles from './WhiteKey.styles';
 
 class WhiteKey extends React.PureComponent {
   render() {
-    const { leftMargin, lastChild } = this.props;
+    const { lastChild, width, leftMarginWidth } = this.props;
 
     const keyStyle = [styles.wrapper];
-    if (leftMargin) {
-      keyStyle.push(styles.leftMarginStyle)
+    if (leftMarginWidth) {
+      keyStyle.push({ marginLeft: -(leftMarginWidth / 2) })
     }
     // Faking the css nth child property for React Native
     if (lastChild) {
       keyStyle.push(styles.lastChild)
     }
 
+    const height = 3.5 * width;
     return(
-      <View style={keyStyle} />
+      <View style={[keyStyle, {width, height}]} />
     );
   }
 

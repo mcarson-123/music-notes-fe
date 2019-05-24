@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.0",
+    "babel-plugin-module-resolver": "^3.2.0",
     "lodash": "^4.17.11",
     "react": "16.8.3",
     "react-native": "0.59.8"

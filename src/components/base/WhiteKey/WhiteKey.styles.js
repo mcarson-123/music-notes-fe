@@ -9,9 +9,6 @@ export default StyleSheet.create({
     borderColor: 'black',
     borderRightWidth: 0,
   },
-  leftMarginStyle: {
-    marginLeft: -10,
-  },
   lastChild: {
     borderRightWidth: 1,
   }
