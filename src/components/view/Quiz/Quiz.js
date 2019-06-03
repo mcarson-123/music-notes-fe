@@ -65,7 +65,15 @@ class Quiz extends React.Component {
     try {
       await AsyncStorage.multiSet(valueArray)
     } catch(e) {
-      // save error
+      // error
+    }
+  }
+
+  resetStoreValues = async (keys) => {
+    try {
+      await AsyncStorage.multiRemove(keys)
+    } catch(e) {
+      // error
     }
   }
 
@@ -89,13 +97,13 @@ class Quiz extends React.Component {
     const note = sample(notesToChooseFrom)
     const offset = get(notesWithOffset, note);
     const startTime = Date.now()
-
+    console.log("nextNote", note, offset)
     return { note, offset, startTime }
   }
 
   resetCounts = () => {
-    this.setStoreValues([["incorrectCount", 0], ["correctCount", 0]])
-    this.setState({incorrectCount: 0, correctCount: 0});
+    this.resetStoreValues(["incorrectCount", "correctCount", "incorrectList"]);
+    this.setState({incorrectCount: 0, correctCount: 0, incorrectList: []});
   }
 
   updateIncorrectList = () => {
