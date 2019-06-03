@@ -14,16 +14,7 @@ import Staff from '../../partial/Staff';
 
 import styles from './Quiz.styles';
 
-const notes = ["F", "G", "A", "B", "C", "D", "E"];
-const notesWithOffset = {
-  "F": 3,
-  "G": 2.5,
-  "A": 2,
-  "B": 1.5,
-  "C": 1,
-  "D": 0.5,
-  "E": 0,
-};
+import { notes, notesWithOffset } from '/config/constants.config';
 
 class Quiz extends React.Component {
 
@@ -84,7 +75,6 @@ class Quiz extends React.Component {
     // Given this method the user may not notice they are being given
     // their previously wrong notes more often.
     const incorrect = incorrectList || this.state.incorrectList || []
-    // console.log("INCORRECT LIST", incorrect)
     notesToChooseFrom = notesToChooseFrom.concat(incorrect)
 
     // Don't show the user a note they have just seen
@@ -97,7 +87,6 @@ class Quiz extends React.Component {
     const note = sample(notesToChooseFrom)
     const offset = get(notesWithOffset, note);
     const startTime = Date.now()
-    console.log("nextNote", note, offset)
     return { note, offset, startTime }
   }
 
@@ -121,7 +110,9 @@ class Quiz extends React.Component {
   }
 
   onNotePress = (key) => {
-    const correct =  key.indexOf(this.state.note) >= 0;
+    // Remove octave number from note to check against key
+    const noteString = this.state.note.replace(/[0-9]/g, '');
+    const correct =  key.indexOf(noteString) >= 0;
 
     if (correct) {
       // Only need to check the time if it was correct, since if it was

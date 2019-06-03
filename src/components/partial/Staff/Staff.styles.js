@@ -9,7 +9,7 @@ export default StyleSheet.create({
   note: {
     position: 'absolute',
     marginLeft: 100,
-    height: 20,
+    height: 21,
     width: 20,
     zIndex: 100,
     backgroundColor: 'black',
@@ -19,6 +19,14 @@ export default StyleSheet.create({
       {rotateX: '160deg'},
       {rotateY: '160deg'},
     ],
+  },
+  ledgerLine: {
+    position: 'absolute',
+    height: 20,
+    width: 40,
+    marginLeft: 90,
+    borderColor: 'black',
+    borderBottomWidth: 1,
   },
   singleBarLine: {
     height: 20,
