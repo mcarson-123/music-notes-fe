@@ -5,6 +5,7 @@ import { View, Image } from 'react-native';
 import styles from './Staff.styles';
 
 import trebleClef from '/assets/staff/treble-clef.png';
+import wholeNote from '/assets/staff/whole-note.png';
 
 class Staff extends React.Component {
   // The ledger line calculations are not particularly extensible, but
@@ -56,7 +57,11 @@ class Staff extends React.Component {
               source={trebleClef}
               resizeMode='contain'
             />
-            <View style={[styles.note, {marginTop: (20*(this.props.offset) - 1)}]}/>
+            <Image
+              style={[styles.note, {marginTop: (20*(this.props.offset))}]}
+              source={wholeNote}
+              resizeMode='contain'
+            />
             {
               this.showSecondaryLedgerLine() &&
               <View style={[styles.ledgerLine, {marginTop: this.calcSecondaryLedgerLineOffset()}]}/>
