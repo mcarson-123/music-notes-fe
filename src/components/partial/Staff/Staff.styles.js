@@ -6,6 +6,12 @@ export default StyleSheet.create({
   },
   measure: {
   },
+  clefImage: {
+    position: 'absolute',
+    marginLeft: 10,
+    marginTop: -27,
+    zIndex: 1,
+  },
   note: {
     position: 'absolute',
     marginLeft: 100,
