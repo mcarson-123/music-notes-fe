@@ -8,5 +8,10 @@ export default StyleSheet.create({
   view: {
     width: '100%',
     padding: spacings.medium,
+    marginTop: spacings.medium,
+    marginBottom: spacings.medium,
   },
+  score: {
+    alignItems: 'center',
+  }
 })

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, View, TouchableOpacity } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -11,10 +11,12 @@ import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
+import Text from '/components/base/Text';
 
 import styles from './Quiz.styles';
 
 import { notes, notesWithOffset } from '/config/constants.config';
+import { spacings } from '/config/styles.config';
 
 class Quiz extends React.Component {
 
@@ -158,22 +160,28 @@ class Quiz extends React.Component {
 
     return(
       <View style={styles.wrapper}>
-        <View>
-          <Text>{`Correct: ${this.state.correctCount}`}</Text>
-          <Text>{`Incorrect: ${this.state.incorrectCount}`}</Text>
-          <Text>{`${this.state.correctRunCount} correct in a row!`}</Text>
-          <TouchableOpacity onPress={this.resetCounts}><Text>Reset</Text></TouchableOpacity>
+        <View style={{ alignItems: 'center', padding: spacings.small}}>
+          <Text textType='h1'>Learn your notes</Text>
         </View>
         <View style={styles.view}>
           <Staff
             note={this.state.note}
             offset={this.state.offset}
           />
-          <View style={{height: 40}}/>
+          <View style={{height: spacings.xlarge}}/>
           <Octave
             note={this.state.note}
             onNotePress={this.onNotePress}
           />
+        </View>
+        <View style={styles.score}>
+            <Text textType='body'>Score</Text>
+            <Text textType='emphasized'>
+              {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
+            </Text>
+            <TouchableOpacity onPress={this.resetCounts}>
+              <Text textType='button'>Reset</Text>
+            </TouchableOpacity>
         </View>
       </View>
     );

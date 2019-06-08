@@ -33,6 +33,7 @@ export default StyleSheet.create({
     borderRightWidth: 1,
     borderLeftWidth: 1,
     borderTopWidth: 1,
+    // backgroundColor: 'white',
   },
   lastBarLine: {
     borderBottomWidth: 1,
