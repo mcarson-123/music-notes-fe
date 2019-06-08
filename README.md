@@ -21,6 +21,9 @@ note to self: Come up with a snappy name for this
 - [x] Don't show the user the same note they just got (can be local state, doesn't need to persist on app closing)
 - [x] Show a new note to the user once they have guessed the current note and have been provided feedback
 - [ ] Show some sort of nice feedback to the user that they got it correct?
+- [ ] Banner when they get runs of 5x correct in a row (Maybe 5 first then multiples of 10)
+- [ ] Banner when they get one wrong after a good run ("Good job, that was XX correct in a row!")
+- [ ] Randomly change it up from treble to base cleff when the user selects a specific mode
 - [ ] Add the bass cleff
 - [x] Add the notes above and below the main staff lines (the ledger line notes)
 - [ ] Add the treble cleff and base cleff images to the staff
