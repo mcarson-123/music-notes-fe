@@ -160,19 +160,22 @@ class Quiz extends React.Component {
 
     return(
       <View style={styles.wrapper}>
-        <View style={{ alignItems: 'center', padding: spacings.small}}>
+        <View style={styles.heading}>
           <Text textType='h1'>Learn your notes</Text>
         </View>
-        <View style={styles.view}>
-          <Staff
-            note={this.state.note}
-            offset={this.state.offset}
-          />
-          <View style={{height: spacings.xlarge}}/>
-          <Octave
-            note={this.state.note}
-            onNotePress={this.onNotePress}
-          />
+        <View>
+          <View style={styles.staff}>
+            <Staff
+              note={this.state.note}
+              offset={this.state.offset}
+            />
+          </View>
+          <View style={styles.octave}>
+            <Octave
+              note={this.state.note}
+              onNotePress={this.onNotePress}
+            />
+          </View>
         </View>
         <View style={styles.score}>
             <Text textType='body'>Score</Text>
