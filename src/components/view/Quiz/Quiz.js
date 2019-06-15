@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dimensions, View, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity, StatusBar, Platform} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+
+import BottomDrawer from 'rn-bottom-drawer';
 
 import sample from 'lodash/sample';
 import get from 'lodash/get';
@@ -11,18 +13,39 @@ import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
+import Drawer from '/components/partial/Drawer';
 import Text from '/components/base/Text';
 
 import styles from './Quiz.styles';
 
 import { notes, notesWithOffset } from '/config/constants.config';
-import { spacings } from '/config/styles.config';
+import { spacings, colors1, colors2, themes } from '/config/styles.config';
 
 class Quiz extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Learn your notes",
+      headerStyle: {
+        backgroundColor: colors1.background
+      },
+      drawerLabel: "Settings",
+      headerLeft: (
+        <TouchableOpacity onPress={() => (navigation.openDrawer())}>
+          <Text>Menu</Text>
+        </TouchableOpacity>
+      )
+    };
+  }
 
   state = { loading: true, correctRunCount: 0}
 
   componentDidMount() {
+    StatusBar.setBarStyle('dark-content');
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(colors1.background);
+    }
+
+
     const intValues = ["correctCount", "incorrectCount"];
     const jsonValues = ["incorrectList"];
     this.getStoreValues(intValues.concat(jsonValues))
@@ -70,7 +93,7 @@ class Quiz extends React.Component {
     }
   }
 
-    nextNote = (incorrectList) => {
+  nextNote = (incorrectList) => {
     let notesToChooseFrom = notes
 
     // NOTE: May want to weigh incorrect notes even more heavily.
@@ -151,6 +174,16 @@ class Quiz extends React.Component {
     }
   }
 
+  onColorSchemePress = (color) => {
+    this.setState({colorScheme: color});
+    // console.log("setting colour Scheme", this.state.colorScheme);
+  }
+
+  // colorSchemes = {
+  //   'colors1': colors1,
+  //   'colors2': colors2,
+  // }
+
   render() {
     if (this.state.loading) {
       return(
@@ -158,38 +191,61 @@ class Quiz extends React.Component {
       )
     }
 
+    console.log("this.state.colorScheme", this.state.colorScheme);
+    console.log(this.colorSchemes)
+    const currentColorScheme = this.state.colorScheme || 'colors1';
+    console.log("*THEMES", themes);
+    const backgroundColor = themes[currentColorScheme].background
+    const primaryColor = themes[currentColorScheme].primary
+    const secondaryColor = themes[currentColorScheme].secondary
+    // let backgroundColor;
+    // if (this.state.colorScheme === 'colors2') {
+    //   backgroundColor = colors2.background;
+    // } else {
+    //   backgroundColor = colors1.background;
+    // }
+    console.log("backgroundColor", backgroundColor);
+
+          //<View style={styles.heading}>
+            //<Text textType='h1' color={primaryColor}>Learn your notes</Text>
+          //</View>
+
     return(
-      <View style={styles.wrapper}>
-        <View style={styles.heading}>
-          <Text textType='h1'>Learn your notes</Text>
-        </View>
-        <View>
-          <View style={styles.staff}>
-            <Staff
-              note={this.state.note}
-              offset={this.state.offset}
-            />
+      <SafeAreaView style={styles.wrapper}>
+        <View style={styles.content}>
+
+          <View>
+            <View style={styles.staff}>
+              <Staff
+                note={this.state.note}
+                offset={this.state.offset}
+              />
+            </View>
+            <View style={styles.octave}>
+              <Octave
+                note={this.state.note}
+                onNotePress={this.onNotePress}
+              />
+            </View>
           </View>
-          <View style={styles.octave}>
-            <Octave
-              note={this.state.note}
-              onNotePress={this.onNotePress}
-            />
+          <View style={styles.score}>
+              <Text textType='body' color={primaryColor}>
+                Score
+              </Text>
+              <Text textType='emphasized' color={primaryColor}>
+                {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
+              </Text>
+              <TouchableOpacity onPress={this.resetCounts}>
+                <Text textType='button' color={secondaryColor}>Reset</Text>
+              </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.score}>
-            <Text textType='body'>Score</Text>
-            <Text textType='emphasized'>
-              {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
-            </Text>
-            <TouchableOpacity onPress={this.resetCounts}>
-              <Text textType='button'>Reset</Text>
-            </TouchableOpacity>
-        </View>
-      </View>
+        <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
+      </SafeAreaView>
     );
   }
 
 }
 // <View style={[styles.view, {width}]}>
 export default Quiz;
+        //<Drawer onColorPress={this.onColorSchemePress}/>

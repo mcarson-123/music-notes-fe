@@ -24,7 +24,7 @@ class Text extends React.PureComponent {
     }
 
     return(
-      <RNText style={ style }>
+      <RNText style={ [style, { color: this.props.color }] }>
         { this.props.children }
       </RNText>
     );
