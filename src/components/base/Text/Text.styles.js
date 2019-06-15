@@ -1,20 +1,22 @@
 import {StyleSheet} from 'react-native';
 
-import { colors } from '/config/styles.config';
+// import { themes } from '/config/styles.config';
+
+// const currentColorScheme = this.state.colorScheme || 'colors1';
 
 export default StyleSheet.create({
   emphasized: {
-    color: colors.oneDark,
+    // color: themes[currentColorScheme].primary,
     fontSize: 42,
     fontWeight: 'bold',
   },
   h1: {
-    color: colors.oneDark,
+    // color: themes[currentColorScheme].primary,
     fontSize: 24,
     fontWeight: 'bold',
   },
   button: {
-    color: colors.threeDark,
+    // color: themes[currentColorScheme].secondary,
     fontSize: 14,
     textTransform: 'uppercase',
     fontWeight: 'bold',

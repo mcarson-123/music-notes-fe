@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dimensions, View, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity, StatusBar, Platform} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+
+import BottomDrawer from 'rn-bottom-drawer';
 
 import sample from 'lodash/sample';
 import get from 'lodash/get';
@@ -11,18 +13,38 @@ import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
+import Drawer from '/components/partial/Drawer';
 import Text from '/components/base/Text';
 
 import styles from './Quiz.styles';
 
 import { notes, notesWithOffset } from '/config/constants.config';
-import { spacings } from '/config/styles.config';
+import { spacings, colors1, colors2, themes } from '/config/styles.config';
 
 class Quiz extends React.Component {
+  state = { loading: true, correctRunCount: 0, colorScheme: 'colors1'}
 
-  state = { loading: true, correctRunCount: 0}
+  static navigationOptions = ({ navigation, state }) => {
+    return {
+      title: "Learn your notes",
+      headerStyle: {
+        backgroundColor: navigation.getParam('color')
+      },
+    };
+  }
 
   componentDidMount() {
+    const colorScheme = this.state && this.state.colorScheme || 'colors1'
+    const color = themes[colorScheme].backgroundDarker
+    console.log("******* updating color scheme 1", color)
+    this.props.navigation.setParams({ color: color });
+
+    StatusBar.setBarStyle('dark-content');
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(color);
+    }
+
+
     const intValues = ["correctCount", "incorrectCount"];
     const jsonValues = ["incorrectList"];
     this.getStoreValues(intValues.concat(jsonValues))
@@ -70,7 +92,7 @@ class Quiz extends React.Component {
     }
   }
 
-    nextNote = (incorrectList) => {
+  nextNote = (incorrectList) => {
     let notesToChooseFrom = notes
 
     // NOTE: May want to weigh incorrect notes even more heavily.
@@ -151,6 +173,17 @@ class Quiz extends React.Component {
     }
   }
 
+  onColorSchemePress = (color) => {
+    this.setState({colorScheme: color});
+
+    const backgroundColor = themes[color].backgroundDarker
+    this.props.navigation.setParams({ color: backgroundColor });
+
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(backgroundColor);
+    }
+  }
+
   render() {
     if (this.state.loading) {
       return(
@@ -158,34 +191,43 @@ class Quiz extends React.Component {
       )
     }
 
+    const currentColorScheme = this.state.colorScheme || 'colors1';
+    const backgroundColor = themes[currentColorScheme].background
+    const primaryColor = themes[currentColorScheme].primary
+    const secondaryColor = themes[currentColorScheme].secondary
+
     return(
       <View style={styles.wrapper}>
-        <View style={styles.heading}>
-          <Text textType='h1'>Learn your notes</Text>
-        </View>
-        <View>
-          <View style={styles.staff}>
-            <Staff
-              note={this.state.note}
-              offset={this.state.offset}
-            />
+        <View style={styles.content}>
+
+          <View>
+            <View style={styles.staff}>
+              <Staff
+                note={this.state.note}
+                offset={this.state.offset}
+              />
+            </View>
+            <View style={styles.octave}>
+              <Octave
+                note={this.state.note}
+                onNotePress={this.onNotePress}
+              />
+            </View>
           </View>
-          <View style={styles.octave}>
-            <Octave
-              note={this.state.note}
-              onNotePress={this.onNotePress}
-            />
+          <View style={styles.score}>
+              <Text textType='body' color={primaryColor}>
+                Score
+              </Text>
+              <Text textType='emphasized' color={primaryColor}>
+                {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
+              </Text>
+              <TouchableOpacity onPress={this.resetCounts}>
+                <Text textType='button' color={secondaryColor}>Reset</Text>
+              </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.score}>
-            <Text textType='body'>Score</Text>
-            <Text textType='emphasized'>
-              {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
-            </Text>
-            <TouchableOpacity onPress={this.resetCounts}>
-              <Text textType='button'>Reset</Text>
-            </TouchableOpacity>
-        </View>
+        <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
+        <Drawer onColorPress={this.onColorSchemePress} colorScheme={currentColorScheme}/>
       </View>
     );
   }
