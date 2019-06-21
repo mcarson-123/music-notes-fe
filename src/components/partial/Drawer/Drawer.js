@@ -2,7 +2,8 @@ import React from 'react';
 
 import { View, TouchableOpacity, Platform, Dimensions } from 'react-native';
 
-import BottomDrawer from 'rn-bottom-drawer';
+// import BottomDrawer from 'rn-bottom-drawer';
+import BottomDrawer from '/components/partial/BottomDrawer';
 
 import Text from '/components/base/Text';
 
@@ -24,10 +25,12 @@ class Drawer extends React.PureComponent {
 
     return(
       <BottomDrawer
-          containerHeight={350}
-          downDisplay={downDisplay}
-          startUp={false}
+          // containerHeight={350}
+          // downDisplay={downDisplay}
+          // startUp={false}
+          // backgroundColor={backgroundColor}
           backgroundColor={backgroundColor}
+          isOpen
         >
         <View style={styles.drawer}>
           <View style={styles.heading}>

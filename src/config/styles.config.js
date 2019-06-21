@@ -28,19 +28,9 @@ export const colors1 = {
 
 export const colors2 = {
   name: 'colors2',
-  // one: '#827081',
-  // oneDark: '#5B4B5A',
-  // two: '#AEA3B0',
-  // three: '#E3D0D8',
-  // threeDark: '#99687C',
-  // four: '#E7E6F7',
-  // fourLight: '#F5F4FF',
-  // five: '#C6D2ED',
-  // fiveDark: '#1A253F',
   primary: '#5B4B5A',
   secondary: '#99687C',
   background: '#F7F7FF',
-  // backgroundDarker: '#E2E1F2',
   backgroundDarker: '#E4E3F4',
   highlight: '#E0DEEF',
 }
@@ -49,9 +39,7 @@ export const colors3 = {
   name: 'colors3',
   primary: '#4B665A',
   secondary: '#89B5B3',
-  // background: '#EDFFFC',
   background: '#EFFFFC',
-  // backgroundDarker: '#D2EFEB',
   backgroundDarker: '#DCF4F1',
   highlight: '#CCE2DF',
 }

@@ -37,7 +37,6 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} />
         </Key>
-        <BlackKey offset={whiteKeyWidth} width={blackKeyWidth}/>
         <Key
           onNotePress={onNotePress}
           note={note}
@@ -46,7 +45,6 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey offset={whiteKeyWidth * 2} width={blackKeyWidth}/>
         <Key
           onNotePress={onNotePress}
           note={note}
@@ -63,7 +61,6 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth}/>
         </Key>
-        <BlackKey offset={whiteKeyWidth * 4} width={blackKeyWidth}/>
         <Key
           onNotePress={onNotePress}
           note={note}
@@ -72,7 +69,6 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey offset={whiteKeyWidth * 5} width={blackKeyWidth}/>
         <Key
           onNotePress={onNotePress}
           note={note}
@@ -81,7 +77,6 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey offset={whiteKeyWidth * 6} width={blackKeyWidth}/>
         <Key
           onNotePress={onNotePress}
           note={note}
@@ -90,6 +85,11 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth} lastChild/>
         </Key>
+        <BlackKey offset={whiteKeyWidth} width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 2} width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 4} width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 5} width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 6} width={blackKeyWidth}/>
       </View>
     );
   }

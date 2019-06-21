@@ -36,7 +36,6 @@ class Quiz extends React.Component {
   componentDidMount() {
     const colorScheme = this.state && this.state.colorScheme || 'colors1'
     const color = themes[colorScheme].backgroundDarker
-    console.log("******* updating color scheme 1", color)
     this.props.navigation.setParams({ color: color });
 
     StatusBar.setBarStyle('dark-content');
@@ -237,5 +236,5 @@ class Quiz extends React.Component {
   }
 
 }
-// <View style={[styles.view, {width}]}>
+
 export default Quiz;
