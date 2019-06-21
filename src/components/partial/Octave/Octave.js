@@ -12,6 +12,9 @@ import styles from './Octave.styles';
 
 class Octave extends React.PureComponent {
   render() {
+    const { note, onNotePress, highlightColor } = this.props;
+
+
     // Use rounding when calculating widths to ensure whole values
     // are used for displaying
     const width = screenWidth - ( 2*spacings.medium );
@@ -27,56 +30,63 @@ class Octave extends React.PureComponent {
     return(
       <View style={styles.wrapper}>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["C"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} />
         </Key>
-        <BlackKey width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth} width={blackKeyWidth}/>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["D"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 2} width={blackKeyWidth}/>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["E"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["F"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth}/>
         </Key>
-        <BlackKey width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 4} width={blackKeyWidth}/>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["G"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 5} width={blackKeyWidth}/>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["A"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <BlackKey width={blackKeyWidth}/>
+        <BlackKey offset={whiteKeyWidth * 6} width={blackKeyWidth}/>
         <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
+          onNotePress={onNotePress}
+          note={note}
           noteValue={["B"]}
+          highlightColor={highlightColor}
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth} lastChild/>
         </Key>

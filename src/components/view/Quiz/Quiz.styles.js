@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { spacings, colors, screenWidth, screenHeight } from '/config/styles.config';
+import { spacings, screenWidth, screenHeight } from '/config/styles.config';
 
 export default StyleSheet.create({
   background: {
-    // backgroundColor: colors.fourLight,
     position: 'absolute',
     top: -60,
     bottom: -60,
@@ -45,4 +44,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: (.03 * screenHeight),
   },
+  reset: {
+    height: 26,
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 })

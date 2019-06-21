@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView, TouchableOpacity, StatusBar, Platform} from 'react-native';
+import { View, SafeAreaView, TouchableHighlight, StatusBar, Platform} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -193,6 +193,7 @@ class Quiz extends React.Component {
 
     const currentColorScheme = this.state.colorScheme || 'colors1';
     const backgroundColor = themes[currentColorScheme].background
+    const highlightColor = themes[currentColorScheme].highlight
     const primaryColor = themes[currentColorScheme].primary
     const secondaryColor = themes[currentColorScheme].secondary
 
@@ -211,6 +212,7 @@ class Quiz extends React.Component {
               <Octave
                 note={this.state.note}
                 onNotePress={this.onNotePress}
+                highlightColor={highlightColor}
               />
             </View>
           </View>
@@ -221,9 +223,11 @@ class Quiz extends React.Component {
               <Text textType='emphasized' color={primaryColor}>
                 {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
               </Text>
-              <TouchableOpacity onPress={this.resetCounts}>
-                <Text textType='button' color={secondaryColor}>Reset</Text>
-              </TouchableOpacity>
+              <TouchableHighlight style={{borderRadius: 4}} underlayColor={highlightColor} onPress={this.resetCounts}>
+                <View style={styles.reset}>
+                  <Text textType='button' color={secondaryColor}>Reset</Text>
+                </View>
+              </TouchableHighlight>
           </View>
         </View>
         <View style={[styles.background, {backgroundColor: backgroundColor}]}/>

@@ -9,10 +9,10 @@ class Key extends React.PureComponent {
   }
 
   render() {
-    const { noteValue, children } = this.props;
+    const { noteValue, highlightColor, children } = this.props;
 
     return(
-      <TouchableHighlight underlayColor={'blue'} onPress={this.onButtonPress}>
+      <TouchableHighlight underlayColor={highlightColor} onPress={this.onButtonPress}>
         { children }
       </TouchableHighlight>
     );

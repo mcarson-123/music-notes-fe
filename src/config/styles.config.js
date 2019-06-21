@@ -23,6 +23,7 @@ export const colors1 = {
   secondary: '#666666',
   background: '#FFFFFF',
   backgroundDarker: '#F2F2F2',
+  highlight: '#E2E2E2',
 }
 
 export const colors2 = {
@@ -41,6 +42,7 @@ export const colors2 = {
   background: '#F7F7FF',
   // backgroundDarker: '#E2E1F2',
   backgroundDarker: '#E4E3F4',
+  highlight: '#E0DEEF',
 }
 
 export const colors3 = {
@@ -51,6 +53,7 @@ export const colors3 = {
   background: '#EFFFFC',
   // backgroundDarker: '#D2EFEB',
   backgroundDarker: '#DCF4F1',
+  highlight: '#CCE2DF',
 }
 
 export const themes = {
