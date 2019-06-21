@@ -20,7 +20,7 @@ class Octave extends React.PureComponent {
     let blackKeyWidth = Math.round(whiteKeyWidth / 2);
     // Ensure width is an even number to allow the marginLeft offset
     // to be a whole number
-    if ( blackKeyWidth % 1.8 != 0) {
+    if ( blackKeyWidth % 2 != 0) {
       blackKeyWidth = blackKeyWidth + 1
     }
 
@@ -33,14 +33,7 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} />
         </Key>
-        <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
-          noteValue={["C+", "D-"]}
-          zIndex
-        >
-          <BlackKey width={blackKeyWidth}/>
-        </Key>
+        <BlackKey width={blackKeyWidth}/>
         <Key
           onNotePress={this.props.onNotePress}
           note={this.props.note}
@@ -48,14 +41,7 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
-          noteValue={["D+", "E-"]}
-          zIndex
-        >
-          <BlackKey width={blackKeyWidth}/>
-        </Key>
+        <BlackKey width={blackKeyWidth}/>
         <Key
           onNotePress={this.props.onNotePress}
           note={this.props.note}
@@ -70,14 +56,7 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth}/>
         </Key>
-        <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
-          noteValue={["F+", "G-"]}
-          zIndex
-        >
-          <BlackKey width={blackKeyWidth}/>
-        </Key>
+        <BlackKey width={blackKeyWidth}/>
         <Key
           onNotePress={this.props.onNotePress}
           note={this.props.note}
@@ -85,14 +64,7 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
-          noteValue={["G+", "A-"]}
-          zIndex
-        >
-          <BlackKey width={blackKeyWidth}/>
-        </Key>
+        <BlackKey width={blackKeyWidth}/>
         <Key
           onNotePress={this.props.onNotePress}
           note={this.props.note}
@@ -100,14 +72,7 @@ class Octave extends React.PureComponent {
         >
           <WhiteKey width={whiteKeyWidth} leftMarginWidth={blackKeyWidth}/>
         </Key>
-        <Key
-          onNotePress={this.props.onNotePress}
-          note={this.props.note}
-          noteValue={["A+", "B-"]}
-          zIndex
-        >
-          <BlackKey width={blackKeyWidth}/>
-        </Key>
+        <BlackKey width={blackKeyWidth}/>
         <Key
           onNotePress={this.props.onNotePress}
           note={this.props.note}

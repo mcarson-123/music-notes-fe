@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TouchableOpacity } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 
 class Key extends React.PureComponent {
 
@@ -9,12 +9,12 @@ class Key extends React.PureComponent {
   }
 
   render() {
-    const { noteValue, zIndex, children } = this.props;
+    const { noteValue, children } = this.props;
 
     return(
-      <TouchableOpacity style={zIndex ? {zIndex: 100} : {}} onPress={this.onButtonPress}>
+      <TouchableHighlight underlayColor={'blue'} onPress={this.onButtonPress}>
         { children }
-      </TouchableOpacity>
+      </TouchableHighlight>
     );
   }
 

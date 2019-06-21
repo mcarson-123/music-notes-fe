@@ -9,9 +9,9 @@ class WhiteKey extends React.PureComponent {
     const { lastChild, width, leftMarginWidth } = this.props;
 
     const keyStyle = [styles.wrapper];
-    if (leftMarginWidth) {
-      keyStyle.push({ marginLeft: -(leftMarginWidth / 2) })
-    }
+    // if (leftMarginWidth) {
+    //   keyStyle.push({ marginLeft: -(leftMarginWidth / 2) })
+    // }
     // Faking the css nth child property for React Native
     if (lastChild) {
       keyStyle.push(styles.lastChild)
