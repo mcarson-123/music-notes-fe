@@ -2,12 +2,12 @@ import React from 'react';
 
 import { View, Image } from 'react-native';
 
-import styles from './Staff.styles';
+import styles from './StaffTreble.styles';
 
 import trebleClef from '/assets/staff/treble-clef.png';
 import wholeNote from '/assets/staff/whole-note.png';
 
-class Staff extends React.Component {
+class StaffTreble extends React.Component {
   // The ledger line calculations are not particularly extensible, but
   // as currently there will only be a need for 2, there's no reason
   // yet to get exceptionally clever here.
@@ -81,4 +81,4 @@ class Staff extends React.Component {
   }
 }
 
-export default Staff;
+export default StaffTreble;

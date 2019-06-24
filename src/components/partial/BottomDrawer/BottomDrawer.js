@@ -12,7 +12,7 @@ class BottomDrawer extends React.Component {
   //   return bottomPosition;
   // }
 
-  state = { isOpen: false, bottomPosition: -310 }
+  state = { isOpen: false, bottomPosition: -330 }
 
   constructor(props) {
     super(props)
@@ -41,7 +41,7 @@ class BottomDrawer extends React.Component {
 
   onPress = () => {
     if (this.state.isOpen) {
-      this.setState({isOpen: false, bottomPosition: -310})
+      this.setState({isOpen: false, bottomPosition: -330})
     } else {
       this.setState({isOpen: true, bottomPosition: 0})
     }
@@ -50,7 +50,7 @@ class BottomDrawer extends React.Component {
   render() {
     const { isOpen, backgroundColor, children } = this.props;
 
-    let negativeHeight = -310;
+    let negativeHeight = -330;
     let modalMoveY = this.yTranslate.interpolate({
       inputRange: [0, 1],
       outputRange: [0, negativeHeight]

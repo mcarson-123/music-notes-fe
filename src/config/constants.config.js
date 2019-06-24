@@ -6,7 +6,7 @@ export const notes = [
   "A3", "B3", "C3"
 ];
 
-export const notesWithOffset = {
+export const trebleNotesWithOffset = {
   "C1": 4.5, // needs ledger line
   "D1": 4,
   "E1": 3.5,
@@ -22,4 +22,22 @@ export const notesWithOffset = {
   "A3": -1.5, // needs ledger line
   "B3": -2, // needs ledger line
   "C3": -2.5, // needs second ledger line
+};
+
+export const bassNotesWithOffset = {
+  "C1": 5.5, // needs secondary ledger line
+  "D1": 5, // needs ledger line
+  "E1": 4.5, // needs ledger line
+  "F1": 4,
+  "G1": 3.5,
+  "A2": 3,
+  "B2": 2.5,
+  "C2": 2,
+  "D2": 1.5,
+  "E2": 1,
+  "F2": 0.5,
+  "G2": 0,
+  "A3": -0.5,
+  "B3": -1,
+  "C3": -1.5, // needs ledger line
 };

@@ -6,7 +6,7 @@ export default StyleSheet.create({
   background: {
     position: 'absolute',
     bottom: 0,
-    height: 350,
+    height: 370,
     width: '100%',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,

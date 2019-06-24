@@ -12,17 +12,18 @@ import without from 'lodash/without';
 import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
-import Staff from '../../partial/Staff';
+import StaffTreble from '../../partial/StaffTreble';
+import StaffBass from '../../partial/StaffBass';
 import Drawer from '/components/partial/Drawer';
 import Text from '/components/base/Text';
 
 import styles from './Quiz.styles';
 
-import { notes, notesWithOffset } from '/config/constants.config';
+import { notes, trebleNotesWithOffset, bassNotesWithOffset } from '/config/constants.config';
 import { spacings, colors1, colors2, themes } from '/config/styles.config';
 
 class Quiz extends React.Component {
-  state = { loading: true, correctRunCount: 0, colorScheme: 'colors1'}
+  state = { loading: true, correctRunCount: 0, colorScheme: 'colors1', clef: 'treble'}
 
   static navigationOptions = ({ navigation, state }) => {
     return {
@@ -35,24 +36,30 @@ class Quiz extends React.Component {
 
   componentDidMount() {
     // Load values from async store into state
-    const intValues = ["correctCount", "incorrectCount"];
-    const stringValues = ["colorScheme"];
-    const jsonValues = ["incorrectList"];
+    const intValues = ['correctCount', 'incorrectCount'];
+    const stringValues = ['colorScheme', 'clef'];
+    const jsonValues = ['incorrectList'];
+
     this.getStoreValues(intValues.concat(jsonValues).concat(stringValues))
       .then((values) => {
         const valuesHash = { loading: false }
 
+        // TODO: Don't loop over items that have no value set
         forEach(values, (value) => {
           if (intValues.indexOf(value[0]) >= 0) {
             valuesHash[value[0]] = parseInt(value[1], 10) || 0
           } else if (stringValues.indexOf(value[0]) >= 0) {
-            valuesHash[value[0]] = value[1] || 'colors1'
+            if (value[0] == 'colorScheme') {
+              valuesHash[value[0]] = value[1] || this.state.colorScheme;
+            } else if (value[0] == 'clef') {
+              valuesHash[value[0]] = value[1] || this.state.clef;
+            }
           } else if (jsonValues.indexOf(value[0]) >= 0) {
             valuesHash[value[0]] = JSON.parse(value[1]) || []
           }
         });
 
-        const newNote = this.nextNote(valuesHash["incorrectList"])
+        const newNote = this.nextNote(valuesHash['incorrectList'])
         this.setState({ ...valuesHash, ...newNote });
 
         // Ensure color scheme loads into the header bar
@@ -111,9 +118,11 @@ class Quiz extends React.Component {
     notesToChooseFrom = without(notesToChooseFrom, prevNote)
 
     const note = sample(notesToChooseFrom)
-    const offset = get(notesWithOffset, note);
+    // console.log("NOTE", note);
+    // const notesWithOffset = this.state.clef == 'bass' ? bassNotesWithOffset : trebleNotesWithOffset
+    // const offset = get(notesWithOffset, note);
     const startTime = Date.now()
-    return { note, offset, startTime }
+    return { note, startTime }
   }
 
   resetCounts = () => {
@@ -137,7 +146,9 @@ class Quiz extends React.Component {
 
   onNotePress = (key) => {
     // Remove octave number from note to check against key
+    // console.log("KEY", key)
     const noteString = this.state.note.replace(/[0-9]/g, '');
+    // console.log("NOTESTRING", noteString)
     const correct =  key.indexOf(noteString) >= 0;
 
     if (correct) {
@@ -187,6 +198,15 @@ class Quiz extends React.Component {
     }
   }
 
+  onClefPress = (clef) => {
+    const newNote = this.nextNote()
+
+    this.setState({ clef, ...newNote });
+    this.setStoreValues([["clef", clef]]);
+
+    // need to reset incorrect notes list?
+  }
+
   render() {
     if (this.state.loading) {
       return(
@@ -194,13 +214,14 @@ class Quiz extends React.Component {
       )
     }
 
-    this.getStoreValues(["correctCount", "incorrectCount"]).then((values) => {console.log("store values", values)})
-
     const currentColorScheme = this.state.colorScheme || 'colors1';
     const backgroundColor = themes[currentColorScheme].background
     const highlightColor = themes[currentColorScheme].highlight
     const primaryColor = themes[currentColorScheme].primary
     const secondaryColor = themes[currentColorScheme].secondary
+
+    const notesWithOffset = this.state.clef == 'bass' ? bassNotesWithOffset : trebleNotesWithOffset
+    const offset = get(notesWithOffset, this.state.note);
 
     return(
       <View style={styles.wrapper}>
@@ -208,10 +229,16 @@ class Quiz extends React.Component {
 
           <View>
             <View style={styles.staff}>
-              <Staff
-                note={this.state.note}
-                offset={this.state.offset}
-              />
+              { this.state.clef == 'bass' ?
+                <StaffBass
+                  note={this.state.note}
+                  offset={offset}
+                /> :
+                <StaffTreble
+                  note={this.state.note}
+                  offset={offset}
+                />
+              }
             </View>
             <View style={styles.octave}>
               <Octave
@@ -236,7 +263,11 @@ class Quiz extends React.Component {
           </View>
         </View>
         <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
-        <Drawer onColorPress={this.onColorSchemePress} colorScheme={currentColorScheme}/>
+        <Drawer
+          onColorPress={this.onColorSchemePress}
+          colorScheme={currentColorScheme}
+          onClefPress={this.onClefPress}
+        />
       </View>
     );
   }

@@ -19,17 +19,38 @@ export default StyleSheet.create({
   },
   section: {
     padding: spacings.small,
+    // backgroundColor: 'blue',
+    width: '60%',
+    // marginRight: spacings.medium,
+    // marginLeft: spacings.medium,
   },
   sectionHeading: {
     paddingBottom: spacings.small,
+    alignSelf: 'center',
   },
-  colorSwatches: {
+  optionsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    // justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   colorSwatch: {
-    height: 40,
-    width: 40,
+    height: 42,
+    width: 42,
     borderRadius: 4,
+    marginRight: spacings.xsmall,
+    marginLeft: spacings.xsmall,
+  },
+  clefOption: {
+    height: 42,
+    width: 42,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    marginRight: spacings.xsmall,
+    marginLeft: spacings.xsmall,
+  },
+  clefImage: {
+    height: 30,
+    width: 30,
   }
 })
