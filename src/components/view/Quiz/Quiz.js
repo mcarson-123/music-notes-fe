@@ -34,33 +34,36 @@ class Quiz extends React.Component {
   }
 
   componentDidMount() {
-    const colorScheme = this.state && this.state.colorScheme || 'colors1'
-    const color = themes[colorScheme].backgroundDarker
-    this.props.navigation.setParams({ color: color });
-
-    StatusBar.setBarStyle('dark-content');
-    if (Platform.OS === 'android') {
-      StatusBar.setBackgroundColor(color);
-    }
-
-
+    // Load values from async store into state
     const intValues = ["correctCount", "incorrectCount"];
+    const stringValues = ["colorScheme"];
     const jsonValues = ["incorrectList"];
-    this.getStoreValues(intValues.concat(jsonValues))
+    this.getStoreValues(intValues.concat(jsonValues).concat(stringValues))
       .then((values) => {
         const valuesHash = { loading: false }
 
         forEach(values, (value) => {
           if (intValues.indexOf(value[0]) >= 0) {
             valuesHash[value[0]] = parseInt(value[1], 10) || 0
+          } else if (stringValues.indexOf(value[0]) >= 0) {
+            valuesHash[value[0]] = value[1] || 'colors1'
           } else if (jsonValues.indexOf(value[0]) >= 0) {
             valuesHash[value[0]] = JSON.parse(value[1]) || []
           }
         });
 
         const newNote = this.nextNote(valuesHash["incorrectList"])
-
         this.setState({ ...valuesHash, ...newNote });
+
+        // Ensure color scheme loads into the header bar
+        const colorScheme = this.state.colorScheme || 'colors1'
+        const color = themes[colorScheme].backgroundDarker
+        this.props.navigation.setParams({ color: color });
+
+        StatusBar.setBarStyle('dark-content');
+        if (Platform.OS === 'android') {
+          StatusBar.setBackgroundColor(color);
+        }
       });
   }
 
@@ -157,7 +160,7 @@ class Quiz extends React.Component {
         incorrectList,
         ...newNote,
       });
-      this.setStoreValues([["correctCount", this.state.correctCount + 1]])
+      this.setStoreValues([["correctCount", (this.state.correctCount + 1).toString()]])
     } else {
       const incorrectList = this.updateIncorrectList();
       const incorrectCount = this.state.incorrectCount + 1;
@@ -168,12 +171,13 @@ class Quiz extends React.Component {
           incorrectList
         }
       );
-      this.setStoreValues([["incorrectCount", incorrectCount], ["incorrectList", JSON.stringify(incorrectList)]])
+      this.setStoreValues([["incorrectCount", incorrectCount.toString()], ["incorrectList", JSON.stringify(incorrectList)]])
     }
   }
 
   onColorSchemePress = (color) => {
     this.setState({colorScheme: color});
+    this.setStoreValues([["colorScheme", color]]);
 
     const backgroundColor = themes[color].backgroundDarker
     this.props.navigation.setParams({ color: backgroundColor });
@@ -189,6 +193,8 @@ class Quiz extends React.Component {
         <Text>Loading everything...</Text>
       )
     }
+
+    this.getStoreValues(["correctCount", "incorrectCount"]).then((values) => {console.log("store values", values)})
 
     const currentColorScheme = this.state.colorScheme || 'colors1';
     const backgroundColor = themes[currentColorScheme].background
