@@ -69,7 +69,7 @@ class Drawer extends React.PureComponent {
               >
                 <View style={styles.clefOption}>
                   <Image
-                    style={styles.clefImage}
+                    style={styles.trebleClefImage}
                     source={trebleClef}
                     resizeMode='contain'
                   />
@@ -80,7 +80,7 @@ class Drawer extends React.PureComponent {
               >
                 <View style={styles.clefOption}>
                   <Image
-                    style={styles.clefImage}
+                    style={styles.bassClefImage}
                     source={bassClef}
                     resizeMode='contain'
                   />

@@ -48,8 +48,14 @@ export default StyleSheet.create({
     borderWidth: 1,
     marginRight: spacings.xsmall,
     marginLeft: spacings.xsmall,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  clefImage: {
+  trebleClefImage: {
+    height: 38,
+    width: 38,
+  },
+  bassClefImage: {
     height: 30,
     width: 30,
   }
