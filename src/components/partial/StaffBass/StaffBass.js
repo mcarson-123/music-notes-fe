@@ -19,7 +19,7 @@ class StaffBass extends React.Component {
 
   showSecondaryLedgerLine = () => {
     const noteOffset = this.props.offset;
-    return (noteOffset < -2);
+    return (noteOffset > 5);
   }
 
   // Note: The ledger line is a box with a bottom border,
@@ -39,7 +39,7 @@ class StaffBass extends React.Component {
   calcSecondaryLedgerLineOffset = () => {
     const noteOffset = this.props.offset;
     if (noteOffset > 5) {
-      return 20*(6);
+      return 20*(5);
     }
     return -20;
   }
