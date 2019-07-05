@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { TouchableWithoutFeedback, Animated } from 'react-native';
+import { TouchableWithoutFeedback, Animated, Platform, Dimensions } from 'react-native';
 
 import styles from './BottomDrawer.styles';
 
 class BottomDrawer extends React.Component {
-  // bottomPosition = () => {
-  //   const isIos = Platform.OS === 'ios';
-  //   const isIphoneX = isIos && Dimensions.get('window').height === 812;
-  //   const bottomPosition = isIphoneX ? -200 : -310
-  //   return bottomPosition;
-  // }
+  bottomPosition = () => {
+    const isIos = Platform.OS === 'ios';
+    const isIphoneX = isIos && Dimensions.get('window').height === 812;
+    const bottomPosition = isIphoneX ? -310 : -320
+    return bottomPosition;
+  }
 
-  state = { isOpen: false, bottomPosition: -330 }
+  state = { isOpen: false, bottomPosition: this.bottomPosition() }
 
   constructor(props) {
     super(props)
@@ -41,7 +41,7 @@ class BottomDrawer extends React.Component {
 
   onPress = () => {
     if (this.state.isOpen) {
-      this.setState({isOpen: false, bottomPosition: -330})
+      this.setState({isOpen: false, bottomPosition: this.bottomPosition()})
     } else {
       this.setState({isOpen: true, bottomPosition: 0})
     }
@@ -50,7 +50,7 @@ class BottomDrawer extends React.Component {
   render() {
     const { isOpen, backgroundColor, children } = this.props;
 
-    let negativeHeight = -330;
+    let negativeHeight = this.bottomPosition();
     let modalMoveY = this.yTranslate.interpolate({
       inputRange: [0, 1],
       outputRange: [0, negativeHeight]
@@ -59,7 +59,7 @@ class BottomDrawer extends React.Component {
     let translateStyle = { transform: [{ translateY: modalMoveY }] };
 
     return(
-      <Animated.View style={ [styles.background, translateStyle, {backgroundColor: backgroundColor, bottom: -310}] }>
+      <Animated.View style={ [styles.background, translateStyle, {backgroundColor: backgroundColor, bottom: this.bottomPosition()}] }>
       <TouchableWithoutFeedback onPress={this.onPress}>
         { children }
       </TouchableWithoutFeedback>
