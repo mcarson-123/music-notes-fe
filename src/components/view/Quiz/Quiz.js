@@ -249,7 +249,7 @@ class Quiz extends React.Component {
             </View>
           </View>
           <View style={styles.score}>
-              <Text textType='body' color={primaryColor}>
+              <Text textType='h1' color={primaryColor}>
                 Score
               </Text>
               <Text textType='emphasized' color={primaryColor}>

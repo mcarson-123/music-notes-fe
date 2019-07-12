@@ -17,9 +17,10 @@ export default StyleSheet.create({
   },
   button: {
     // color: themes[currentColorScheme].secondary,
-    fontSize: 14,
+    fontSize: 18,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+    letterSpacing: 0.6,
   },
   body: {
     fontSize: 24,
