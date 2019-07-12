@@ -228,6 +228,19 @@ class Quiz extends React.Component {
         <View style={styles.content}>
 
           <View>
+            <View style={styles.score}>
+                <Text textType='h1' color={primaryColor}>
+                  Score
+                </Text>
+                <Text textType='emphasized' color={primaryColor}>
+                  {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
+                </Text>
+                <TouchableHighlight style={{borderRadius: 4}} underlayColor={highlightColor} onPress={this.resetCounts}>
+                  <View style={styles.reset}>
+                    <Text textType='button' color={secondaryColor}>Reset</Text>
+                  </View>
+                </TouchableHighlight>
+            </View>
             <View style={styles.staff}>
               { this.state.clef == 'bass' ?
                 <StaffBass
@@ -247,19 +260,6 @@ class Quiz extends React.Component {
                 highlightColor={highlightColor}
               />
             </View>
-          </View>
-          <View style={styles.score}>
-              <Text textType='h1' color={primaryColor}>
-                Score
-              </Text>
-              <Text textType='emphasized' color={primaryColor}>
-                {`${this.state.correctCount}/${(this.state.correctCount + this.state.incorrectCount)}`}
-              </Text>
-              <TouchableHighlight style={{borderRadius: 4}} underlayColor={highlightColor} onPress={this.resetCounts}>
-                <View style={styles.reset}>
-                  <Text textType='button' color={secondaryColor}>Reset</Text>
-                </View>
-              </TouchableHighlight>
           </View>
         </View>
         <View style={[styles.background, {backgroundColor: backgroundColor}]}/>

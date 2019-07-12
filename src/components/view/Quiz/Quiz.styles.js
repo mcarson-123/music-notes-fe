@@ -27,22 +27,22 @@ export default StyleSheet.create({
   heading: {
     alignItems: 'center',
   },
+  score: {
+    alignItems: 'center',
+    marginBottom: (.00000005 * screenHeight * screenHeight * screenHeight),
+  },
   staff: {
     width: '100%',
     paddingRight: spacings.medium,
     paddingLeft: spacings.medium,
     marginTop: spacings.medium,
-    marginBottom: (.10 * screenHeight),
+    marginBottom: (.0002 * screenHeight * screenHeight),
   },
   octave: {
     width: '100%',
     alignItems: 'center',
     paddingRight: spacings.medium,
     paddingLeft: spacings.medium,
-  },
-  score: {
-    alignItems: 'center',
-    marginBottom: (.03 * screenHeight),
   },
   reset: {
     height: 26,
