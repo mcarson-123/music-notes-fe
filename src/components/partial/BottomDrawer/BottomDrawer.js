@@ -1,15 +1,20 @@
 import React from 'react';
 
-import { TouchableWithoutFeedback, Animated, Platform, Dimensions } from 'react-native';
+import { TouchableWithoutFeedback, TouchableOpacity, Animated, Platform, Dimensions, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './BottomDrawer.styles';
 
 class BottomDrawer extends React.Component {
+  // bottomPosition = () => {
+  //   const isIos = Platform.OS === 'ios';
+  //   const isIphoneX = isIos && Dimensions.get('window').height === 812;
+  //   const bottomPosition = isIphoneX ? -310 : -310
+  //   return bottomPosition;
+  // }
+
   bottomPosition = () => {
-    const isIos = Platform.OS === 'ios';
-    const isIphoneX = isIos && Dimensions.get('window').height === 812;
-    const bottomPosition = isIphoneX ? -310 : -320
-    return bottomPosition;
+    return -310;
   }
 
   state = { isOpen: false, bottomPosition: this.bottomPosition() }
@@ -48,7 +53,7 @@ class BottomDrawer extends React.Component {
   }
 
   render() {
-    const { isOpen, backgroundColor, children } = this.props;
+    const { backgroundColor, children } = this.props;
 
     let negativeHeight = this.bottomPosition();
     let modalMoveY = this.yTranslate.interpolate({
@@ -59,10 +64,19 @@ class BottomDrawer extends React.Component {
     let translateStyle = { transform: [{ translateY: modalMoveY }] };
 
     return(
-      <Animated.View style={ [styles.background, translateStyle, {backgroundColor: backgroundColor, bottom: this.bottomPosition()}] }>
-      <TouchableWithoutFeedback onPress={this.onPress}>
-        { children }
-      </TouchableWithoutFeedback>
+      <Animated.View style={ [styles.background, translateStyle, {bottom: this.bottomPosition()}] }>
+        <TouchableWithoutFeedback onPress={this.onPress}>
+          <View style={[styles.tab, {backgroundColor: backgroundColor}]}>
+            <View style={styles.heading}>
+              <Icon name="settings" size={30} />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={this.onPress}>
+          <View style={styles.content}>
+            { children }
+          </View>
+        </TouchableWithoutFeedback>
       </Animated.View>
     );
   }

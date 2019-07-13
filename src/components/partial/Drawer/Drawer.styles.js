@@ -3,13 +3,16 @@ import {StyleSheet} from 'react-native';
 import { colors, spacings } from '/config/styles.config';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    height: 310,
+    width: '100%',
+  },
   drawer: {
     flex: 1,
     alignItems: 'center',
-  },
-  heading: {
-    paddingTop: spacings.xsmall,
-    paddingBottom: spacings.medium,
+    width: '100%',
+    borderTopLeftRadius: 10,
   },
   break: {
     height: 1,
@@ -19,10 +22,7 @@ export default StyleSheet.create({
   },
   section: {
     padding: spacings.small,
-    // backgroundColor: 'blue',
-    width: '60%',
-    // marginRight: spacings.medium,
-    // marginLeft: spacings.medium,
+    width: '80%',
   },
   sectionHeading: {
     paddingBottom: spacings.small,
@@ -30,8 +30,9 @@ export default StyleSheet.create({
   },
   optionsRow: {
     flexDirection: 'row',
-    // justifyContent: 'space-around',
     justifyContent: 'center',
+    paddingRight: spacings.small,
+    paddingLeft: spacings.small,
   },
   colorSwatch: {
     height: 42,

@@ -22,9 +22,9 @@ note to self: Come up with a snappy name for this
 - [ ] Deal with landscape mode?
 - [ ] Add linter, duh
 - [ ] Does it even need a header?
-- [ ] Settings panel updates:
-  - [ ] Change to cog icon
-  - [ ] Style like an index card
+- [x] Settings panel updates:
+  - [x] Change to cog icon
+  - [x] Style like an index card
 - [ ] Show future notes greyed out (like tetris next pieces)
 - [ ] Onboarding to explain to users what to do?
 - [ ] Make the touch colour "a touch" darker
