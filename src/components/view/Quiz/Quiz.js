@@ -12,8 +12,7 @@ import without from 'lodash/without';
 import takeRight from 'lodash/takeRight';
 
 import Octave from '../../partial/Octave';
-import StaffTreble from '../../partial/StaffTreble';
-import StaffBass from '../../partial/StaffBass';
+import Staff from '../../partial/Staff';
 import Drawer from '/components/partial/Drawer';
 import Text from '/components/base/Text';
 
@@ -59,8 +58,10 @@ class Quiz extends React.Component {
           }
         });
 
-        const newNote = this.nextNote(valuesHash['incorrectList'])
-        this.setState({ ...valuesHash, ...newNote });
+        // const nextNote = this.nextNote(valuesHash['incorrectList'])
+        // const currentNote = this.currentNote(valuesHash['incorrectList'])
+        const updateNotes = this.updateNotes(valuesHash['incorrectList'])
+        this.setState({ ...valuesHash, ...updateNotes });
 
         // Ensure color scheme loads into the header bar
         const colorScheme = this.state.colorScheme || 'colors1'
@@ -101,7 +102,7 @@ class Quiz extends React.Component {
     }
   }
 
-  nextNote = (incorrectList) => {
+  updateNotes = (incorrectList) => {
     let notesToChooseFrom = notes
 
     // NOTE: May want to weigh incorrect notes even more heavily.
@@ -114,15 +115,22 @@ class Quiz extends React.Component {
     // within this current session, if the app had been shut
     // down it's doesn't matter if they see the same note right
     // away upon opening it up
-    const prevNote = this.state.note;
-    notesToChooseFrom = without(notesToChooseFrom, prevNote)
+    // const prevNote = this.state.note;
+    const prevNextNote = this.state.nextNote
+    notesToChooseFrom = without(notesToChooseFrom, prevNextNote)
 
-    const note = sample(notesToChooseFrom)
-    // console.log("NOTE", note);
-    // const notesWithOffset = this.state.clef == 'bass' ? bassNotesWithOffset : trebleNotesWithOffset
-    // const offset = get(notesWithOffset, note);
+    const nextNote = sample(notesToChooseFrom)
+
     const startTime = Date.now()
-    return { note, startTime }
+    let note;
+    if (this.state.nextNote) {
+      note = this.state.nextNote
+    } else { // App is loading
+      notesToChooseFrom = without(notesToChooseFrom, nextNote)
+      note = sample(notesToChooseFrom)
+    }
+
+    return { nextNote, note, startTime }
   }
 
   resetCounts = () => {
@@ -163,13 +171,13 @@ class Quiz extends React.Component {
         incorrectList = this.updateIncorrectList();
       }
 
-      const newNote = this.nextNote()
+      const updateNotes = this.updateNotes()
 
       this.setState({
         correctCount: this.state.correctCount + 1,
         correctRunCount: this.state.correctRunCount + 1,
         incorrectList,
-        ...newNote,
+        ...updateNotes,
       });
       this.setStoreValues([["correctCount", (this.state.correctCount + 1).toString()]])
     } else {
@@ -210,7 +218,7 @@ class Quiz extends React.Component {
   render() {
     if (this.state.loading) {
       return(
-        <Text>Loading everything...</Text>
+        <Text>Loading...</Text>
       )
     }
 
@@ -222,6 +230,7 @@ class Quiz extends React.Component {
 
     const notesWithOffset = this.state.clef == 'bass' ? bassNotesWithOffset : trebleNotesWithOffset
     const offset = get(notesWithOffset, this.state.note);
+    const nextNoteoffset = get(notesWithOffset, this.state.nextNote);
 
     return(
       <View style={styles.wrapper}>
@@ -242,16 +251,12 @@ class Quiz extends React.Component {
                 </TouchableHighlight>
             </View>
             <View style={styles.staff}>
-              { this.state.clef == 'bass' ?
-                <StaffBass
-                  note={this.state.note}
-                  offset={offset}
-                /> :
-                <StaffTreble
-                  note={this.state.note}
-                  offset={offset}
-                />
-              }
+              <Staff
+                note={this.state.note}
+                offset={offset}
+                nextNoteOffset={nextNoteoffset}
+                isBass={this.state.clef == 'bass'}
+              />
             </View>
             <View style={styles.octave}>
               <Octave

@@ -22,7 +22,7 @@ class BottomDrawer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.yTranslate = new Animated.Value(0);
+    this.yTranslate = new Animated.Value(0); // move to state
   }
 
   componentDidUpdate(prevProps, prevState) {

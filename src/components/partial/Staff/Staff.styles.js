@@ -6,10 +6,16 @@ export default StyleSheet.create({
   },
   measure: {
   },
-  clefImage: {
+  bassClefImage: {
     position: 'absolute',
     marginLeft: 10,
     marginTop: -42,
+    zIndex: 1,
+  },
+  trebleClefImage: {
+    position: 'absolute',
+    marginLeft: 10,
+    marginTop: -27,
     zIndex: 1,
   },
   note: {
@@ -32,7 +38,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   nextNoteLedgerLine: {
-    marginLeft: 204,
+    marginLeft: 90,
     opacity: 0.4,
   },
   singleBarLine: {

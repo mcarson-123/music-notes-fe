@@ -12,21 +12,21 @@ class StaffBass extends React.Component {
   // as currently there will only be a need for 2, there's no reason
   // yet to get exceptionally clever here.
 
-  showPrimaryLedgerLine = () => {
-    const noteOffset = this.props.offset;
+  showPrimaryLedgerLine = (offset) => {
+    const noteOffset = offset || this.props.offset;
     return (noteOffset > 4 || noteOffset < -1);
   }
 
-  showSecondaryLedgerLine = () => {
-    const noteOffset = this.props.offset;
+  showSecondaryLedgerLine = (offset) => {
+    const noteOffset = offset || this.props.offset;
     return (noteOffset > 5);
   }
 
   // Note: The ledger line is a box with a bottom border,
   // so there is some inherent offset from this.
   // Which is why the default is -20 not 0
-  calcPrimaryLedgerLineOffset = () => {
-    const noteOffset = this.props.offset;
+  calcPrimaryLedgerLineOffset = (offset) => {
+    const noteOffset = offset || this.props.offset;
     if (noteOffset > 4) {
       return 20*4;
     }
@@ -36,8 +36,8 @@ class StaffBass extends React.Component {
     return -20;
   }
 
-  calcSecondaryLedgerLineOffset = () => {
-    const noteOffset = this.props.offset;
+  calcSecondaryLedgerLineOffset = (offset) => {
+    const noteOffset = offset || this.props.offset;
     if (noteOffset > 5) {
       return 20*(5);
     }
@@ -62,6 +62,11 @@ class StaffBass extends React.Component {
               source={wholeNote}
               resizeMode='contain'
             />
+            <Image
+              style={[styles.note, styles.nextNote, {marginTop: (20*(this.props.nextNoteOffset))}]}
+              source={wholeNote}
+              resizeMode='contain'
+            />
             {
               this.showSecondaryLedgerLine() &&
               <View style={[styles.ledgerLine, {marginTop: this.calcSecondaryLedgerLineOffset()}]}/>
@@ -69,6 +74,14 @@ class StaffBass extends React.Component {
             {
               this.showPrimaryLedgerLine() &&
               <View style={[styles.ledgerLine, {marginTop: this.calcPrimaryLedgerLineOffset()}]}/>
+            }
+            {
+              this.showSecondaryLedgerLine(this.props.nextNoteOffset) &&
+              <View style={[styles.ledgerLine, styles.nextNoteLedgerLine, {marginTop: this.calcSecondaryLedgerLineOffset(this.props.nextNoteOffset)}]}/>
+            }
+            {
+              this.showPrimaryLedgerLine(this.props.nextNoteOffset) &&
+              <View style={[styles.ledgerLine, styles.nextNoteLedgerLine, {marginTop: this.calcPrimaryLedgerLineOffset(this.props.nextNoteOffset)}]}/>
             }
             <View style={styles.singleBarLine}/>
             <View style={styles.singleBarLine}/>
