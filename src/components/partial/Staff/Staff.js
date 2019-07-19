@@ -108,7 +108,7 @@ class Staff extends React.Component {
     // Note: 1 is removed from the note offset since the rotation of the note
     // then makes it not touch any staff lines above it. This lifts it up
     // slightly so it looks better.
-
+    console.log("this.props.incorrectNoteOffset", this.props.incorrectNoteOffset)
 
     let translateCurrentNoteStyle = { opacity: this.state.a1 };
     const translate = this.state.a1.interpolate({
@@ -147,11 +147,21 @@ class Staff extends React.Component {
             }
             {
               this.props.incorrectNote &&
-              <Animated.Image
-                style={[styles.note, {opacity: incorrectNoteOpacity, tintColor: colors.error, marginTop: (20*(this.props.incorrectNoteOffset))}]}
-                source={wholeNote}
-                resizeMode='contain'
-              />
+              <Animated.View style={{ opacity: incorrectNoteOpacity }}>
+                <Image
+                  style={[styles.note, {tintColor: colors.error, marginTop: (20*(this.props.incorrectNoteOffset))}]}
+                  source={wholeNote}
+                  resizeMode='contain'
+                />
+                {
+                  this.showSecondaryLedgerLine(this.props.incorrectNoteOffset) &&
+                  <View style={[styles.ledgerLine, {borderColor: colors.error, marginTop: this.calcSecondaryLedgerLineOffset(this.props.incorrectNoteOffset)}]}/>
+                }
+                {
+                  this.showPrimaryLedgerLine(this.props.incorrectNoteOffset) &&
+                  <View style={[styles.ledgerLine, {borderColor: colors.error, marginTop: this.calcPrimaryLedgerLineOffset(this.props.incorrectNoteOffset)}]}/>
+                }
+              </Animated.View>
             }
             <Animated.View style={ translateCurrentNoteStyle }>
               <Image
