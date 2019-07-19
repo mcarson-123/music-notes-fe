@@ -1,14 +1,14 @@
 // The numbers represent the octave the notes are in,
 // "C1" represents middle C for treble cleff
-// export const notes = [
-//   "C1", "D1", "E1", "F1", "G1",
-//   "A2", "B2", "C2", "D2", "E2", "F2", "G2",
-//   "A3", "B3", "C3"
-// ];
-
 export const notes = [
-  "C1", "B3", "C3"
+  "C1", "D1", "E1", "F1", "G1",
+  "A2", "B2", "C2", "D2", "E2", "F2", "G2",
+  "A3", "B3", "C3"
 ];
+
+// export const notes = [
+//   "C1", "B3", "C3"
+// ];
 
 export const trebleNotesWithOffset = {
   "C1": 4.5, // needs ledger line

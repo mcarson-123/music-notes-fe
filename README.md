@@ -25,13 +25,13 @@ note to self: Come up with a snappy name for this
 - [x] Settings panel updates:
   - [x] Change to cog icon
   - [x] Style like an index card
-- [ ] Show future notes greyed out (like tetris next pieces)
+- [x] Show future notes greyed out (like tetris next pieces)
 - [ ] Onboarding to explain to users what to do?
 - [ ] Make the touch colour "a touch" darker
 - [x] Move score to the top to allow the keyboard to be within easier reach of the user's thumbs
 - [ ] Show the score as "correct: x" and "incorrect: y", and maybe a percentage
 - [ ] Easy mode where the C notes are shown on the staff in another colour?
-- [ ] If the user presses the wrong note, show on the staff the note they just pressed
+- [x] If the user presses the wrong note, show on the staff the note they just pressed
 - [x] Add application state to store the user's current progress
   - [x] Store the current run (number of correct and incorrect notes in current session)
   - [x] Store notes the user took a "long" (figure out what long means) time to select

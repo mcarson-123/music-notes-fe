@@ -14,7 +14,8 @@ export const screenHeight = Dimensions.get('window').height;
 export const colors = {
   lightGrey: '#D3D3D3',
   mediumGrey: '#C0C0C0',
-  darkGrey: '#A9A9A9'
+  darkGrey: '#A9A9A9',
+  error: '#D6360E'
 }
 
 export const colors1 = {

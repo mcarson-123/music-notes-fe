@@ -8,6 +8,8 @@ import trebleClef from '/assets/staff/treble-clef.png';
 import bassClef from '/assets/staff/bass-clef.png';
 import wholeNote from '/assets/staff/whole-note.png';
 
+import { colors } from '/config/styles.config';
+
 class Staff extends React.Component {
   // The ledger line calculations are not particularly extensible, but
   // as currently there will only be a need for 2, there's no reason
@@ -16,12 +18,25 @@ class Staff extends React.Component {
   state = {
     current: this.props.offset,
     next: this.props.nextNoteOffset,
+    // incorrectNote: this.props.incorrectNote,
     a1: new Animated.Value(1),
     a2: new Animated.Value(0),
+    a3: new Animated.Value(0),
     nextEntering: false,
   }
 
   componentDidUpdate(oldProps) {
+    if(this.props.incorrectNote) {
+      Animated.timing(this.state.a3, {
+        toValue: 1,
+        duration: 600,
+      }).start(() => {
+        Animated.timing(this.state.a3, {
+          toValue: 0,
+          duration: 600,
+        }).start();
+      })
+    }
     if (this.props.offset !== oldProps.offset) {
       Animated.timing(this.state.a1, {
         toValue: 0,
@@ -105,6 +120,10 @@ class Staff extends React.Component {
       transform: [{ translateX: translate }],
       opacity: ( this.state.nextEntering ? this.state.a2 : opacity )
     };
+    const incorrectNoteOpacity = this.state.a3.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1]
+    });
 
     return(
       <View>
@@ -120,6 +139,14 @@ class Staff extends React.Component {
               <Image
                 style={[styles.trebleClefImage, {width: 60, height: 140}]}
                 source={trebleClef}
+                resizeMode='contain'
+              />
+            }
+            {
+              this.props.incorrectNote &&
+              <Animated.Image
+                style={[styles.note, {opacity: incorrectNoteOpacity, tintColor: colors.error, marginTop: (20*(this.props.incorrectNoteOffset))}]}
+                source={wholeNote}
                 resizeMode='contain'
               />
             }

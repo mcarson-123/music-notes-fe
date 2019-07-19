@@ -10,6 +10,8 @@ import get from 'lodash/get';
 import forEach from 'lodash/forEach';
 import without from 'lodash/without';
 import takeRight from 'lodash/takeRight';
+import filter from 'lodash/filter';
+import indexOf from 'lodash/indexOf';
 
 import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
@@ -154,9 +156,7 @@ class Quiz extends React.Component {
 
   onNotePress = (key) => {
     // Remove octave number from note to check against key
-    // console.log("KEY", key)
     const noteString = this.state.note.replace(/[0-9]/g, '');
-    // console.log("NOTESTRING", noteString)
     const correct =  key.indexOf(noteString) >= 0;
 
     if (correct) {
@@ -176,6 +176,8 @@ class Quiz extends React.Component {
       this.setState({
         correctCount: this.state.correctCount + 1,
         correctRunCount: this.state.correctRunCount + 1,
+        incorrectNoteOffset: null,
+        incorrectNote: null,
         incorrectList,
         ...updateNotes,
       });
@@ -183,10 +185,26 @@ class Quiz extends React.Component {
     } else {
       const incorrectList = this.updateIncorrectList();
       const incorrectCount = this.state.incorrectCount + 1;
+      const notesWithOffset = this.state.clef == 'bass' ? bassNotesWithOffset : trebleNotesWithOffset
+
+      const notesForKey = filter(notes, (note) => { return note[0] === key[0] })
+      let distance = 9
+      let closestIncorrectNote = ""
+      forEach(notesForKey, (note) => {
+        noteDistance = Math.abs(Math.abs(indexOf(notes, this.state.note)) - Math.abs(indexOf(notes, note)))
+        if (noteDistance < distance) {
+          distance = noteDistance
+          closestIncorrectNote = note;
+        }
+      })
+
+      const offset = get(notesWithOffset, closestIncorrectNote);
       this.setState(
         {
           incorrectCount: incorrectCount,
           correctRunCount: 0, // Reset correct run, sad for them :(
+          incorrectNoteOffset: offset,
+          incorrectNote: closestIncorrectNote,
           incorrectList
         }
       );
@@ -195,7 +213,11 @@ class Quiz extends React.Component {
   }
 
   onColorSchemePress = (color) => {
-    this.setState({colorScheme: color});
+    this.setState({
+      colorScheme: color,
+      incorrectNoteOffset: null, // reset so it doesn't flash to the user
+      incorrectNote: null,
+      });
     this.setStoreValues([["colorScheme", color]]);
 
     const backgroundColor = themes[color].backgroundDarker
@@ -255,6 +277,8 @@ class Quiz extends React.Component {
                 note={this.state.note}
                 offset={offset}
                 nextNoteOffset={nextNoteoffset}
+                incorrectNote={this.state.incorrectNote}
+                incorrectNoteOffset={this.state.incorrectNoteOffset}
                 isBass={this.state.clef == 'bass'}
               />
             </View>
