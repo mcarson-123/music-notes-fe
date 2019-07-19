@@ -229,9 +229,14 @@ class Quiz extends React.Component {
   }
 
   onClefPress = (clef) => {
-    const newNote = this.nextNote()
+    const updateNotes = this.updateNotes()
 
-    this.setState({ clef, ...newNote });
+    this.setState({
+      clef,
+      incorrectNoteOffset: null, // reset so it doesn't flash to the user
+      incorrectNote: null,
+      ...updateNotes
+    });
     this.setStoreValues([["clef", clef]]);
 
     // need to reset incorrect notes list?

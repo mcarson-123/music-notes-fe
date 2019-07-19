@@ -37,7 +37,7 @@ class Staff extends React.Component {
         }).start();
       })
     }
-    if (this.props.offset !== oldProps.offset) {
+    if (this.props.offset !== oldProps.offset && this.props.isBass === oldProps.isBass) {
       Animated.timing(this.state.a1, {
         toValue: 0,
         duration: 600,
@@ -54,6 +54,9 @@ class Staff extends React.Component {
         this.state.a1.setValue(1)
         this.setState({current: this.props.offset, next: this.props.nextNoteOffset})
       })
+    }
+    if (this.props.isBass !== oldProps.isBass) {
+      this.setState({current: this.props.offset, next: this.props.nextNoteOffset})
     }
   }
 
