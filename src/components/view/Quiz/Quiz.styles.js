@@ -49,5 +49,8 @@ export default StyleSheet.create({
     width: 60,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  opacity: {
+    opacity: 0.5,
   }
 })

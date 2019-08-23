@@ -282,6 +282,11 @@ class Quiz extends React.Component {
     const offset = get(notesWithOffset, this.state.note);
     const nextNoteoffset = get(notesWithOffset, this.state.nextNote);
 
+    const staffStyles = [styles.staff];
+    if (!this.state.onboarded) {
+      staffStyles.push(styles.opacity);
+    }
+
     return(
       <View style={styles.wrapper}>
         <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
@@ -305,7 +310,7 @@ class Quiz extends React.Component {
                   </View>
                 </TouchableHighlight>
             </View>
-            <View style={styles.staff}>
+            <View style={staffStyles}>
               <Staff
                 note={this.state.note}
                 offset={offset}
