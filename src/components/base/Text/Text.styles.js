@@ -22,7 +22,16 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.6,
   },
+  buttonSmall: {
+    fontSize: 14,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    letterSpacing: 0.6,
+  },
   body: {
     fontSize: 24,
+  },
+  bodySmall: {
+    fontSize: 18,
   }
 })

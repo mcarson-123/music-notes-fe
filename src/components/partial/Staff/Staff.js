@@ -108,7 +108,6 @@ class Staff extends React.Component {
     // Note: 1 is removed from the note offset since the rotation of the note
     // then makes it not touch any staff lines above it. This lifts it up
     // slightly so it looks better.
-    console.log("this.props.incorrectNoteOffset", this.props.incorrectNoteOffset)
 
     let translateCurrentNoteStyle = { opacity: this.state.a1 };
     const translate = this.state.a1.interpolate({

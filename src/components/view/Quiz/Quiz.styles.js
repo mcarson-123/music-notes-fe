@@ -10,6 +10,27 @@ export default StyleSheet.create({
     left: 0,
     zIndex: -1000,
   },
+  overlay: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    opacity: 0.5,
+    top: -60,
+    bottom: -160,
+    right: 0,
+    left: 0,
+    zIndex: 10,
+  },
+  overlayDrawer: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    opacity: 0.5,
+    // top: 0,
+    height: 220,
+    bottom: -160,
+    right: 0,
+    left: 0,
+    zIndex: 10,
+  },
   wrapper: {
     width: screenWidth,
     height: screenHeight,
@@ -49,5 +70,8 @@ export default StyleSheet.create({
     width: 60,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  onboardingZIndex: {
+    zIndex: 11
   }
 })

@@ -17,6 +17,7 @@ import Octave from '../../partial/Octave';
 import Staff from '../../partial/Staff';
 import Drawer from '/components/partial/Drawer';
 import Text from '/components/base/Text';
+import Onboarding from '/components/partial/Onboarding';
 
 import styles from './Quiz.styles';
 
@@ -24,7 +25,14 @@ import { notes, trebleNotesWithOffset, bassNotesWithOffset } from '/config/const
 import { spacings, colors1, colors2, themes } from '/config/styles.config';
 
 class Quiz extends React.Component {
-  state = { loading: true, correctRunCount: 0, colorScheme: 'colors1', clef: 'treble'}
+  state = {
+    loading: true,
+    correctRunCount: 0,
+    colorScheme: 'colors1',
+    clef: 'treble',
+    onboarded: false,
+    onboardingStep: 1,
+  }
 
   static navigationOptions = ({ navigation, state }) => {
     return {
@@ -40,10 +48,12 @@ class Quiz extends React.Component {
     const intValues = ['correctCount', 'incorrectCount'];
     const stringValues = ['colorScheme', 'clef'];
     const jsonValues = ['incorrectList'];
+    const boolValues = ['onboarded'];
 
-    this.getStoreValues(intValues.concat(jsonValues).concat(stringValues))
+    this.getStoreValues(intValues.concat(jsonValues).concat(stringValues).concat(boolValues))
       .then((values) => {
         const valuesHash = { loading: false }
+        console.log("VALUES", values)
 
         // TODO: Don't loop over items that have no value set
         forEach(values, (value) => {
@@ -57,6 +67,9 @@ class Quiz extends React.Component {
             }
           } else if (jsonValues.indexOf(value[0]) >= 0) {
             valuesHash[value[0]] = JSON.parse(value[1]) || []
+          } else if (boolValues.indexOf(value[0]) >= 0) {
+            console.log("boolValues", value[0], value[1])
+            valuesHash[value[0]] = value[1] || false
           }
         });
 
@@ -242,6 +255,20 @@ class Quiz extends React.Component {
     // need to reset incorrect notes list?
   }
 
+  finishedOnboarding = () => {
+    this.setState({ onboarded: true, onboardingStep: 1 })
+    this.setStoreValues([["onboarded", true]]);
+  }
+
+  updateOnboardingStep = () => {
+    this.setState({ onboardingStep: this.state.onboardingStep + 1 })
+  }
+
+  showTour = () => {
+    this.setState({ onboarded: false })
+    this.setStoreValues([["onboarded", false]]);
+  }
+
   render() {
     if (this.state.loading) {
       return(
@@ -251,6 +278,7 @@ class Quiz extends React.Component {
 
     const currentColorScheme = this.state.colorScheme || 'colors1';
     const backgroundColor = themes[currentColorScheme].background
+    const backgroundDarkerColor = themes[currentColorScheme].backgroundDarker
     const highlightColor = themes[currentColorScheme].highlight
     const primaryColor = themes[currentColorScheme].primary
     const secondaryColor = themes[currentColorScheme].secondary
@@ -259,12 +287,46 @@ class Quiz extends React.Component {
     const offset = get(notesWithOffset, this.state.note);
     const nextNoteoffset = get(notesWithOffset, this.state.nextNote);
 
+
+    // Styles
+    const staffStyles = [styles.staff];
+    if (!this.state.onboarded && indexOf([2, 4, 5], this.state.onboardingStep) >= 0) {
+      staffStyles.push(styles.onboardingZIndex);
+    }
+
+    const scoreStyles = [styles.score];
+    if (!this.state.onboarded  && indexOf([6], this.state.onboardingStep) >= 0) {
+      scoreStyles.push(styles.onboardingZIndex);
+    }
+
+    const octaveStyles = [styles.octave];
+    if (!this.state.onboarded  && indexOf([3], this.state.onboardingStep) >= 0) {
+      octaveStyles.push(styles.onboardingZIndex);
+    }
+
+    let drawerRaiseZIndex = false;
+    if (!this.state.onboarded  && indexOf([7], this.state.onboardingStep) >= 0) {
+      drawerRaiseZIndex = true;
+    }
+
     return(
       <View style={styles.wrapper}>
+        <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
+        {
+          !this.state.onboarded &&
+          <Onboarding
+            highlightColor={highlightColor}
+            backgroundColor={backgroundDarkerColor}
+            finishedOnboarding={this.finishedOnboarding}
+            updateOnboardingStep={this.updateOnboardingStep}
+            currentOnboardingStep={this.state.onboardingStep}
+          />
+        }
         <View style={styles.content}>
-
           <View>
-            <View style={styles.score}>
+            {!this.state.onboarded && <View style={styles.overlay} />}
+
+            <View style={scoreStyles}>
                 <Text textType='h1' color={primaryColor}>
                   Score
                 </Text>
@@ -277,7 +339,7 @@ class Quiz extends React.Component {
                   </View>
                 </TouchableHighlight>
             </View>
-            <View style={styles.staff}>
+            <View style={staffStyles}>
               <Staff
                 note={this.state.note}
                 offset={offset}
@@ -287,7 +349,7 @@ class Quiz extends React.Component {
                 isBass={this.state.clef == 'bass'}
               />
             </View>
-            <View style={styles.octave}>
+            <View style={octaveStyles}>
               <Octave
                 note={this.state.note}
                 onNotePress={this.onNotePress}
@@ -296,12 +358,14 @@ class Quiz extends React.Component {
             </View>
           </View>
         </View>
-        <View style={[styles.background, {backgroundColor: backgroundColor}]}/>
-        <Drawer
-          onColorPress={this.onColorSchemePress}
-          colorScheme={currentColorScheme}
-          onClefPress={this.onClefPress}
-        />
+          {!this.state.onboarded && <View style={styles.overlayDrawer} />}
+          <Drawer
+            drawerRaiseZIndex={drawerRaiseZIndex}
+            onColorPress={this.onColorSchemePress}
+            colorScheme={currentColorScheme}
+            onClefPress={this.onClefPress}
+            showTour={this.showTour}
+          />
       </View>
     );
   }

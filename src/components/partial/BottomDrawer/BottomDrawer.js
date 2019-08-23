@@ -17,7 +17,10 @@ class BottomDrawer extends React.Component {
     return -310;
   }
 
-  state = { isOpen: false, bottomPosition: this.bottomPosition() }
+  state = {
+    isOpen: this.props.close || false,
+    bottomPosition: this.props.close ? 0 : this.bottomPosition(),
+  }
 
   constructor(props) {
     super(props)

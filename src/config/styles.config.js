@@ -18,6 +18,12 @@ export const colors = {
   error: '#D6360E'
 }
 
+// Dark blue/purple
+// #1f0482
+//
+// #150482
+// light: #d2ceeb
+
 export const colors1 = {
   name: 'colors1',
   primary: '#000000',

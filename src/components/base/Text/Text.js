@@ -15,8 +15,12 @@ class Text extends React.PureComponent {
       style = styles.emphasized;
     } else if ( textType === 'button' ) {
       style = styles.button;
+    } else if ( textType === 'buttonSmall' ) {
+      style = styles.buttonSmall;
     } else if ( textType === 'body' ) {
       style = styles.body;
+    } else if ( textType === 'bodySmall' ) {
+      style = styles.bodySmall;
     } else if ( textType === 'h1' ) {
       style = styles.h1;
     } else {
@@ -33,7 +37,7 @@ class Text extends React.PureComponent {
 }
 
 Text.propTypes = {
-  textType: PropTypes.oneOf(['emphasized', 'button', 'body', 'h1']),
+  textType: PropTypes.oneOf(['emphasized', 'button', 'buttonSmall', 'body', 'bodySmall', 'h1']),
 };
 
 export default Text;
