@@ -74,6 +74,11 @@ class Drawer extends React.PureComponent {
               </View>
             </View>
             <View style={styles.break}/>
+            <View style={styles.section}>
+              <TouchableOpacity onPress={this.props.showTour}>
+                <Text textType='h1' color={textColor} style={styles.sectionHeading}>Take Tour</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </BottomDrawer>
